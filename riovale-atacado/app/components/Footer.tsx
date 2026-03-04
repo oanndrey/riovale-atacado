@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image"; // Importando componente Image
 import {
   Instagram,
   Facebook,
@@ -23,14 +24,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Coluna 1: Logo & Sobre */}
           <div className="space-y-6">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-riovale-primary rounded-full flex items-center justify-center font-bold text-riovale-secondary text-sm border border-white">
-                RV
-              </div>
-              <span className="font-display font-bold text-xl tracking-wider">
-                RIOVALE ATACADO
-              </span>
+            {/* LOGO ADICIONADA AQUI */}
+            <div className="relative w-48 h-16 md:w-56 md:h-20 -ml-2">
+              <Image
+                src="/logo-riovale.png"
+                alt="RioVale Atacado"
+                fill
+                className="object-contain object-left"
+              />
             </div>
+
             <p className="text-gray-400 text-sm leading-relaxed">
               Líder em distribuição no Nordeste, levando produtos de qualidade e
               preços competitivos para quem faz a economia girar.
@@ -169,7 +172,7 @@ export default function Footer() {
         </div>
 
         {/* Linha Final - Copyright e Créditos */}
-        <div className="pt-8 border-t border-white/10 flex flex-col lg:flex-row justify-between items-center gap-4 text-[10px] text-whitye-500 font-mono uppercase tracking-[0.1em]">
+        <div className="pt-8 border-t border-white/10 flex flex-col lg:flex-row justify-between items-center gap-4 text-[10px] text-gray-400 font-mono uppercase tracking-[0.1em]">
           {/* Dados Legais da Empresa */}
           <div className="text-center lg:text-left">
             <p className="mb-1">
@@ -178,9 +181,9 @@ export default function Footer() {
             <p>CNPJ: 17.512.912/0001-45 • Todos os direitos reservados.</p>
           </div>
 
-          {/* Assinatura do Desenvolvedor */}
+          {/* Assinatura do Desenvolvedor (PRESERVADA) */}
           <a
-            href="https://hiwston.com"
+            href="https://instagram.com/oanndrey"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 group transition-colors duration-300"
@@ -192,7 +195,7 @@ export default function Footer() {
                 Andrey Vieira
               </span>{" "}
               •{" "}
-              <span className="text-gray-300 font-bold group-hover:text-riovale-primary transition-colors decoration-riovale-primary underline-offset-4 group-hover:underline">
+              <span className="text-white-300 font-bold group-hover:text-riovale-primary transition-colors decoration-riovale-primary underline-offset-4 group-hover:underline">
                 SOLICITE SEU SITE
               </span>
             </span>

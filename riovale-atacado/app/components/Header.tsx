@@ -11,16 +11,15 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  // Links mapeados para os IDs das seções
   const navLinks = [
-    { name: "Início", href: "#" }, // Mapeia para o topo
+    { name: "Início", href: "#" },
     { name: "Produtos", href: "#produtos" },
     { name: "Vantagens", href: "#vantagens" },
     { name: "Depoimentos", href: "#depoimentos" },
     { name: "Contato", href: "#contato" },
   ];
 
-  // Efeito 1: Detectar Scroll para mudar tamanho do header
+  // Efeito de scroll para mudar o estilo do header
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -29,95 +28,81 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Efeito 2: "Scroll Spy" - Detectar qual seção está visível para mover a barrinha
+  // Scroll Spy (Detectar seção ativa)
   useEffect(() => {
     const handleScrollSpy = () => {
-      const scrollPosition = window.scrollY + 200; // Offset para ativar um pouco antes de chegar
-
-      // Verifica cada seção
+      const scrollPosition = window.scrollY + 200;
       for (const link of navLinks) {
         if (link.href === "#") {
           if (window.scrollY < 200) setActiveSection("#");
           continue;
         }
-
         const section = document.querySelector(link.href) as HTMLElement;
         if (section) {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.offsetHeight;
-
           if (
-            scrollPosition >= sectionTop &&
-            scrollPosition < sectionTop + sectionHeight
+            scrollPosition >= section.offsetTop &&
+            scrollPosition < section.offsetTop + section.offsetHeight
           ) {
             setActiveSection(link.href);
           }
         }
       }
     };
-
     window.addEventListener("scroll", handleScrollSpy);
     return () => window.removeEventListener("scroll", handleScrollSpy);
   }, []);
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${
         isScrolled
-          ? "bg-riovale-primary shadow-lg py-1"
+          ? "bg-riovale-primary shadow-lg py-2" // Aumentei levemente (de py-1 para py-2) para caber a logo maior
           : "bg-riovale-primary py-3"
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center relative">
-        {/* === ÁREA DA LOGO (Esquerda) === */}
-        <div className="flex items-center">
-          {/* Div fantasma para reservar espaço lateral se necessário, mas visualmente a logo é absoluta */}
-          <div className="w-10 md:w-0"></div>
-
-          <Link
-            href="/"
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-50"
-            onClick={() => setActiveSection("#")}
+        {/* LOGO */}
+        <Link
+          href="/"
+          className="relative z-[101] flex items-center justify-center group"
+          onClick={() => setActiveSection("#")}
+        >
+          {/* CONTAINER DA IMAGEM */}
+          <div
+            className={`relative transition-all duration-300 ${
+              isScrolled
+                ? "w-64 h-24 -my-6" // AUMENTEI AQUI: Antes era w-40. Agora w-52 (maior largura) e h-14 (altura boa).
+                : "w-64 h-24 -my-6" // Topo: Continua gigante com margem negativa
+            }`}
           >
-            <div
-              className={`relative transition-all duration-300 ${
-                isScrolled
-                  ? "w-50 h-16 md:w-54 md:h-20"
-                  : "w-72 h-24 md:w-72 md:h-28"
+            <Image
+              src="/logo-riovale.png"
+              alt="RioVale Atacado"
+              fill
+              className={`object-contain object-left transition-all duration-300 ${
+                isScrolled ? "" : "scale-110 origin-left drop-shadow-lg"
               }`}
-            >
-              <Image
-                src="/logo-riovale.png"
-                alt="RioVale Atacado"
-                fill
-                className="object-contain object-left"
-                priority
-              />
-            </div>
-          </Link>
-        </div>
+              priority
+            />
+          </div>
+        </Link>
 
-        {/* === NAVEGAÇÃO CENTRALIZADA (Centro Absoluto) === */}
-        <nav className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-1">
+        {/* NAVEGAÇÃO */}
+        <nav className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-1 z-[90]">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href;
-
             return (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setActiveSection(link.href)}
                 className={`relative px-4 py-2 text-sm font-bold uppercase tracking-wide transition-colors ${
-                  // Se estiver ativo ou hover, fica branco/escuro, senão verde padrão
                   isActive
                     ? "text-riovale-secondary-mid"
                     : "text-riovale-secondary hover:text-riovale-text"
                 }`}
               >
-                {/* Texto do Link */}
                 <span className="relative z-10">{link.name}</span>
-
-                {/* A Barrinha Animada (Só aparece se for o link ativo) */}
                 {isActive && (
                   <motion.div
                     layoutId="activeTab"
@@ -130,13 +115,12 @@ export default function Header() {
           })}
         </nav>
 
-        {/* === BOTÕES CTA (Direita) === */}
-        <div className="hidden md:flex items-center gap-4 ml-auto">
+        {/* BOTÕES CTA */}
+        <div className="hidden md:flex items-center gap-4 ml-auto z-[90]">
           <button className="flex items-center gap-2 border border-riovale-secondary text-riovale-secondary px-3 py-2 rounded-md hover:bg-riovale-secondary/10 transition-colors text-xs font-bold uppercase whitespace-nowrap">
             <Phone size={16} />
             (88) 9999-9999
           </button>
-
           <button className="bg-riovale-secondary text-white px-5 py-2 rounded-md font-bold text-xs uppercase tracking-wide hover:bg-riovale-secondary-mid transition-all hover:-translate-y-1 shadow-md flex items-center gap-2 whitespace-nowrap">
             <ShoppingCart size={18} />
             Fazer Pedido
@@ -145,7 +129,7 @@ export default function Header() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-riovale-secondary ml-auto z-50 relative"
+          className="md:hidden text-riovale-secondary ml-auto z-[102]"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
@@ -154,7 +138,7 @@ export default function Header() {
 
       {/* Mobile Drawer */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-riovale-primary border-t border-riovale-secondary/10 p-4 shadow-xl flex flex-col gap-4">
+        <div className="md:hidden absolute top-full left-0 w-full bg-riovale-primary border-t border-riovale-secondary/10 p-4 shadow-xl flex flex-col gap-4 z-[90]">
           {navLinks.map((link) => (
             <Link
               key={link.name}
