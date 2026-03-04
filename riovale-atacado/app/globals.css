@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  /* --- Paleta de Cores RioVale --- */
+
+  /* Amarelos */
+  --color-riovale-primary: #f2b705; /* Amarelo Ouro */
+  --color-riovale-primary-dark: #d9a004; /* Mostarda (Hover) */
+  --color-riovale-primary-light: #ffd54f; /* Amarelo Claro */
+
+  /* Verdes */
+  --color-riovale-secondary: #1b5e20; /* Verde Escuro (Principal) */
+  --color-riovale-secondary-mid: #2e7d32; /* Verde Médio */
+  --color-riovale-secondary-light: #4caf50; /* Verde Claro */
+
+  /* Fundos e Textos */
+  --color-riovale-bg: #fafaf5; /* Branco Quente (Fundo) */
+  --color-riovale-bg-alt: #f0ede5; /* Cinza Areia */
+  --color-riovale-text: #1a1a1a; /* Grafite */
+  --color-riovale-text-sec: #5c5c5c; /* Cinza Escuro */
+  --color-riovale-border: #e0ddd5; /* Divisor */
+
+  /* Status */
+  --color-riovale-error: #d32f2f;
+  --color-riovale-success: #388e3c;
+
+  /* --- Fontes --- */
+  /* Vinculando as variáveis do Next.js (layout.tsx) ao Tailwind */
+  --font-display: var(--font-barlow), ui-sans-serif, system-ui;
+  --font-sans: var(--font-source), ui-sans-serif, system-ui;
+  --font-mono: var(--font-mono), ui-monospace, SFMono-Regular;
+
+  /* --- Animações Customizadas (Opcional) --- */
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-slide-up: slide-up 0.5s ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slide-up {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+/* Estilos Globais */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-riovale-bg);
+    color: var(--color-riovale-text);
+  }
+}
