@@ -80,7 +80,7 @@ export default function Header() {
               alt="RioVale Atacado"
               fill
               className={`object-contain object-left transition-all duration-300 ${
-                isScrolled ? "" : "scale-110 origin-left drop-shadow-lg"
+                isScrolled ? "" : "scale-60 origin-left drop-shadow-lg"
               }`}
               priority
             />
