@@ -7,7 +7,6 @@ import { Menu, X, ShoppingCart, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
@@ -19,16 +18,7 @@ export default function Header() {
     { name: "Contato", href: "#contato" },
   ];
 
-  // Efeito de scroll para mudar o estilo do header
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Scroll Spy (Detectar seção ativa)
+  // Scroll Spy (Detectar seção ativa) - Mantido para a funcionalidade da barrinha nos links
   useEffect(() => {
     const handleScrollSpy = () => {
       const scrollPosition = window.scrollY + 200;
@@ -53,41 +43,26 @@ export default function Header() {
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${
-        isScrolled
-          ? "bg-riovale-primary shadow-lg py-2" // Aumentei levemente (de py-1 para py-2) para caber a logo maior
-          : "bg-riovale-primary py-3"
-      }`}
-    >
+    <header className="fixed top-0 left-0 w-full z-[100] bg-riovale-primary shadow-lg py-3">
       <div className="container mx-auto px-4 flex justify-between items-center relative">
-        {/* LOGO */}
+        {/* LOGO - Fixa no tamanho grande com margem negativa */}
         <Link
           href="/"
           className="relative z-[101] flex items-center justify-center group"
           onClick={() => setActiveSection("#")}
         >
-          {/* CONTAINER DA IMAGEM */}
-          <div
-            className={`relative transition-all duration-300 ${
-              isScrolled
-                ? "w-64 h-24 -my-6" // AUMENTEI AQUI: Antes era w-40. Agora w-52 (maior largura) e h-14 (altura boa).
-                : "w-64 h-24 -my-6" // Topo: Continua gigante com margem negativa
-            }`}
-          >
+          <div className="relative w-64 h-24 -my-6 transition-all duration-300">
             <Image
               src="/logo-riovale.png"
               alt="RioVale Atacado"
               fill
-              className={`object-contain object-left transition-all duration-300 ${
-                isScrolled ? "" : "scale-60 origin-left drop-shadow-lg"
-              }`}
+              className="object-contain object-left drop-shadow-lg scale-70 origin-left"
               priority
             />
           </div>
         </Link>
 
-        {/* NAVEGAÇÃO */}
+        {/* NAVEGAÇÃO CENTRALIZADA */}
         <nav className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-1 z-[90]">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href;
